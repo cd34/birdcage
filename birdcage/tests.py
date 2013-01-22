@@ -110,5 +110,8 @@ class TestPhrase(unittest.TestCase):
         text_a = Text('one hour, fourty-five minutes', '1 hour, 45 minutes', \
             '1h45m', '1:45')
         text_b = Text('until armageddon strikes the earth', trim=True)
+
         self.assertEqual(Phrase(text_a, text_b). \
-            generate(length=40), u'1h45m until armageddon strikes the ea...')
+            generate(length=40), u'1h45m until armageddon strikes the earth')
+        #self.assertEqual(Phrase(text_a, text_b). \
+        #    generate(length=40), u'1:45 until armageddon strikes the earth')

@@ -80,7 +80,7 @@ class Text(object):
 
         if trim_length and self.trim:
             append_elipses = ''
-            if trim_length <= len(self.items[self.selected]):
+            if trim_length < len(self.items[self.selected]):
                 trim_length -= 3
                 append_elipses = '...'
             return self.items[self.selected][:trim_length] + append_elipses

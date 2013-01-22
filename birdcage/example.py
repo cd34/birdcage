@@ -24,7 +24,7 @@ Generate the phrase
 """
 print 'No maximum set, generate phrase\n'
 print 'expecting:', 'one hour, fourty-five minutes until armageddon strikes the earth'
-print 'expecting:', phrase.generate()
+print 'received: ', phrase.generate()
 print '\n'
 
 
@@ -33,7 +33,7 @@ Select a different delimiter between the Text objects
 """
 print 'No maximum length set, generate phrase with ": " as the delimiter\n'
 print 'expecting:', 'one hour, fourty-five minutes: until armageddon strikes the earth'
-print 'expecting:', phrase.generate(delimiter=': ')
+print 'received: ', phrase.generate(delimiter=': ')
 print '\n'
 
 """
@@ -41,6 +41,11 @@ Set a maximum length for the message. Birdcage will try to compact the string
 gracefully.
 """
 print 'Set a maximum length of 40 characters\n'
-print 'expecting:', '1h45m until armageddon strikes the ea...'
-print 'expecting:', phrase.generate(length=40)
+print 'expecting:', '1h45m until armageddon strikes the earth'
+print 'received: ', phrase.generate(length=40)
+print '\n'
+
+print 'Set a maximum length of 30 characters\n'
+print 'expecting:', '1h45m until armageddon stri...'
+print 'received: ', phrase.generate(length=30)
 print '\n'
