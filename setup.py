@@ -9,7 +9,7 @@ install_requires = [
 ]
 
 tests_require = install_requires + ['Sphinx', 'docutils',
-                                    'virtualenv', 'nose']
+                                    'virtualenv', 'nose', 'coverage']
 
 here = os.path.abspath(os.path.dirname(__file__))
 try:

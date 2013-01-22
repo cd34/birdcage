@@ -106,6 +106,9 @@ class TestPhrase(unittest.TestCase):
         self.assertEqual(Phrase(self.text_a, self.text_long_trim). \
             generate(length=50), u'aa this is a much longer message')
 
+        with self.assertRaises(ValueError):
+           Phrase(self.text_a,self.text_b).generate(length=1)
+
     def test_phrase_example(self):
         text_a = Text('one hour, fourty-five minutes', '1 hour, 45 minutes', \
             '1h45m', '1:45')
@@ -113,5 +116,5 @@ class TestPhrase(unittest.TestCase):
 
         self.assertEqual(Phrase(text_a, text_b). \
             generate(length=40), u'1h45m until armageddon strikes the earth')
-        #self.assertEqual(Phrase(text_a, text_b). \
-        #    generate(length=40), u'1:45 until armageddon strikes the earth')
+        self.assertEqual(Phrase(text_a, text_b). \
+            generate(length=30), u'1:45 until armageddon strikes the earth')
