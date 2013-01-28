@@ -118,12 +118,18 @@ class TestPhrase(unittest.TestCase):
         text_a = Text('one hour, fourty-five minutes', '1 hour, 45 minutes', \
             '1h45m', '1:45')
         text_b = Text('until armageddon strikes the earth', trim=True)
-        text_c = Text('until armageddon strikes the earth', \
-            min_length=24, trim=True)
-
         self.assertEqual(Phrase(text_a, text_b). \
             generate(length=40), u'1h45m until armageddon strikes the earth')
+
+        text_a = Text('one hour, fourty-five minutes', '1 hour, 45 minutes', \
+            '1h45m', '1:45')
+        text_b = Text('until armageddon strikes the earth', trim=True)
         self.assertEqual(Phrase(text_a, text_b). \
             generate(length=30), u'1h45m until armageddon stri...')
+
+        text_a = Text('one hour, fourty-five minutes', '1 hour, 45 minutes', \
+            '1h45m', '1:45')
+        text_c = Text('until armageddon strikes the earth', \
+            min_length=24, trim=True)
         self.assertEqual(Phrase(text_a, text_c). \
             generate(length=30), u'1:45 until armageddon strik...')
