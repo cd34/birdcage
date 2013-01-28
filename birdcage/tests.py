@@ -80,6 +80,11 @@ class TestPhrase(unittest.TestCase):
         self.text_long_trim = Text('this is a much longer message', \
             trim=True)
 
+    def test_non_trim_length(self):
+        test_phrase = Phrase(self.text_a, self.text_b)
+        self.assertEqual(test_phrase.non_trim_length( \
+            [self.text_a, self.text_b]), 2)
+
     def test_phrase_object(self):
         self.assertEqual(Phrase(self.text_a,self.text_b).generate(), \
             u'aa bb')
@@ -117,4 +122,4 @@ class TestPhrase(unittest.TestCase):
         self.assertEqual(Phrase(text_a, text_b). \
             generate(length=40), u'1h45m until armageddon strikes the earth')
         self.assertEqual(Phrase(text_a, text_b). \
-            generate(length=30), u'1:45 until armageddon strikes the earth')
+            generate(length=30), u'1h45m until armageddon stri...')

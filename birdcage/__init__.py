@@ -14,7 +14,6 @@ class Phrase(object):
         len_trims = filter(None, [x.min_length if x.trim else None \
             for x in self.args])
 
-        #trim_length = sum(len_trims) / len(len_trims)
         max_length = phrase_length - len(delim) * len(self.args) - \
             sum(len_trims)
 
