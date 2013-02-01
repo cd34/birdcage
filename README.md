@@ -28,11 +28,11 @@ representations of the time, and a fixed text that can be trimmed if required.
 Since there is no maximum length set, the generated phrase will contain the
 longest elements and won't trim the Text that has the trim attribute set.
 
-a = Text('one hour, fourty-five minutes', '1 hour, 45 minutes', '1h45m', '1:45')
-b = Text('until armageddon strikes the earth', trim=True)
-phrase = Phrase(a, b)
+    a = Text('one hour, fourty-five minutes', '1 hour, 45 minutes', '1h45m', '1:45')
+    b = Text('until armageddon strikes the earth', trim=True)
+    phrase = Phrase(a, b)
 
-phrase contains 'one hour, fourty-five minutes until armageddon strikes the earth'
+    phrase contains 'one hour, fourty-five minutes until armageddon strikes the earth'
 
 
 No maximum length set, generate phrase with ": " as the delimiter In this
@@ -41,11 +41,11 @@ fixed text that can be trimmed if required. Since there is no maximum
 length set, the generated phrase will contain the longest elements and
 won't trim the Text that has the trim attribute set.
 
-a = Text('one hour, fourty-five minutes', '1 hour, 45 minutes', '1h45m', '1:45')
-b = Text('until armageddon strikes the earth', trim=True)
-phrase = phrase.generate(delimiter=': ')
+    a = Text('one hour, fourty-five minutes', '1 hour, 45 minutes', '1h45m', '1:45')
+    b = Text('until armageddon strikes the earth', trim=True)
+    phrase = phrase.generate(delimiter=': ')
 
-phrase contains 'one hour, fourty-five minutes: until armageddon strikes the earth'
+    phrase contains 'one hour, fourty-five minutes: until armageddon strikes the earth'
 
 
 Set a maximum length of 40 characters. In this case, we're sending four 
@@ -54,11 +54,11 @@ trimmed if required. Since there is a maximum length of 40 characters set,
 the generated phrase will contain the shortest time element and will trim
 the Text that has the trim attribute set.
 
-a = Text('one hour, fourty-five minutes', '1 hour, 45 minutes', '1h45m', '1:45')
-b = Text('until armageddon strikes the earth', trim=True)
-phrase = phrase.generate(length=40)
+    a = Text('one hour, fourty-five minutes', '1 hour, 45 minutes', '1h45m', '1:45')
+    b = Text('until armageddon strikes the earth', trim=True)
+    phrase = phrase.generate(length=40)
 
-phrase contains '1h45m until armageddon strikes the earth'
+    phrase contains '1h45m until armageddon strikes the earth'
 
 
 Set a maximum length of 30 characters. In this case, we're sending four 
@@ -67,9 +67,9 @@ trimmed if required. Since there is a maximum length of 40 characters set,
 the generated phrase will contain the shortest time element and will trim
 the Text that has the trim attribute set.
 
-a = Text('one hour, fourty-five minutes', '1 hour, 45 minutes', '1h45m', '1:45')
-b = Text('until armageddon strikes the earth', trim=True)
-phrase = phrase.generate(length=40)
+    a = Text('one hour, fourty-five minutes', '1 hour, 45 minutes', '1h45m', '1:45')
+    b = Text('until armageddon strikes the earth', trim=True)
+    phrase = phrase.generate(length=40)
 
-expecting: 1h45m until armageddon stri...
-received:  1h45m until armageddon stri...
+    expecting: 1h45m until armageddon stri...
+    received:  1h45m until armageddon stri...
