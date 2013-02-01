@@ -71,5 +71,4 @@ the Text that has the trim attribute set.
     b = Text('until armageddon strikes the earth', trim=True)
     phrase = phrase.generate(length=40)
 
-    expecting: 1h45m until armageddon stri...
-    received:  1h45m until armageddon stri...
+    phrase contains '1h45m until armageddon stri...'
