@@ -1,3 +1,6 @@
+.. image:: https://api.travis-ci.org/cd34/birdcage.png?branch=master
+        :target: https://travis-ci.org/cd34/birdcage
+
 birdcage
 ========
 
