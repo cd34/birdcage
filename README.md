@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/cd34/birdcage.png)](https://travis-ci.org/cd34/birdcage)
+[![Tests](https://github.com/cd34/birdcage/actions/workflows/tests.yml/badge.svg)](https://github.com/cd34/birdcage/actions/workflows/tests.yml)
 
 birdcage
 ========
