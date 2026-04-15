@@ -11,5 +11,7 @@
 *.db
 *.db-journal
 .coverage
+__pycache__/
+.venv/
 /build
 /dist

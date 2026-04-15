@@ -1,61 +1,63 @@
-class Phrase(object):
+class Phrase:
     def __init__(self, *args):
         self.args = args
 
     def generate(self, **kwargs):
         delim = kwargs.get('delimiter', ' ')
         phrase_length = kwargs.get('length', None)
-        
+
+        for x in self.args:
+            x.selected = 0
+
         max_message = delim.join([x.maxlen for x in self.args])
         if not phrase_length or len(max_message) <= phrase_length:
             return max_message
 
-        lens = filter(None, [None if x.trim else x.lens for x in self.args])
-        len_trims = filter(None, [x.min_length if x.trim else None \
-            for x in self.args])
+        len_trims = [x.min_length for x in self.args if x.trim]
+        num_non_trim = sum(1 for x in self.args if not x.trim)
+        delim_count = max(len(self.args) - 1, 0)
 
-        max_length = phrase_length - len(delim) * len(self.args) - \
-            sum(len_trims)
+        max_length = (phrase_length - len(delim) * delim_count
+                      - sum(len_trims))
+        current_len = self._non_trim_length()
 
-        if max_length < 0:
-            raise ValueError
-            #raise Exception(ValueError, \
-            #    'Can\'t squeeze, length too short')
-
-        current_len = self.non_trim_length(self.args)
-        num_lens = len(lens)
+        if max_length < 0 or current_len > max_length:
+            raise ValueError(
+                f"length {phrase_length} is too short to fit the phrase")
         len_count = 0
 
-        while current_len < max_length and len_count < num_lens:
+        while current_len < max_length and len_count < num_non_trim:
             for x in self.args:
-                try:
-                     if x.next_len - x.cur_len + current_len < max_length:
-                         x.select_next()
-                         current_len = self.non_trim_length(self.args)
-                         len_count = 0
-                except:
-                     len_count += 1
+                if x.next_len is None:
+                    len_count += 1
+                elif x.next_len - x.cur_len + current_len <= max_length:
+                    x.select_next()
+                    current_len = self._non_trim_length()
+                    len_count = 0
+                else:
+                    len_count += 1
 
-        final_lens = sum([0 if x.trim else x.cur_len for x in self.args])
-        trim_length = (phrase_length - len(delim) * len(self.args) - \
-            final_lens + 1) / len(len_trims)
-        return delim.join([x.cur_text(trim_length=trim_length) \
-            for x in self.args])
+        if len_trims:
+            final_lens = sum(0 if x.trim else x.cur_len for x in self.args)
+            trim_length = ((phrase_length - len(delim) * delim_count
+                            - final_lens) // len(len_trims))
+        else:
+            trim_length = None
 
-    def non_trim_length(self, phrase):
+        return delim.join([x.cur_text(trim_length=trim_length)
+                           for x in self.args])
+
+    def _non_trim_length(self):
         length = 0
-        for x in phrase:
+        for x in self.args:
             if not x.trim:
-                length += len(x.items[x.selected])    
+                length += len(x.items[x.selected])
         return length
 
-class Text(object):
-    # trim should only allow one item
 
+class Text:
     def __init__(self, *args, **kwargs):
-        #self.priority = kwargs.get('priority', 1)
-
-        self.items = sorted(map(unicode, args), key=len)
+        self.items = sorted(map(str, args), key=len)
         self.trim = kwargs.get('trim', False)
         self.trim_delim = kwargs.get('trim_delim', '...')
         self.min_length = kwargs.get('min_length', 10)
@@ -66,10 +68,10 @@ class Text(object):
 
     @property
     def lens(self):
-        return map(len, self.items)
+        return list(map(len, self.items))
 
     def select(self, selected):
-        if selected < len(self.items) and selected >= 0:
+        if 0 <= selected < len(self.items):
             self.selected = selected
         else:
             raise IndexError
@@ -78,11 +80,11 @@ class Text(object):
         trim_length = kwargs.get('trim_length', None)
 
         if trim_length and self.trim:
-            append_elipses = ''
-            if trim_length < len(self.items[self.selected]):
-                trim_length -= 3
-                append_elipses = '...'
-            return self.items[self.selected][:trim_length] + append_elipses
+            text = self.items[self.selected]
+            if trim_length < len(text):
+                trim_length -= len(self.trim_delim)
+                return text[:trim_length] + self.trim_delim
+            return text
         return self.items[self.selected]
 
     @property
@@ -92,7 +94,7 @@ class Text(object):
     @property
     def next_len(self):
         if self.selected < len(self.items) - 1:
-            return len(self.items[self.selected+1])
+            return len(self.items[self.selected + 1])
         else:
             return None
 
